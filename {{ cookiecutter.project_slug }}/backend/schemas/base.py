@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 from humps import camelize
 from pydantic import BaseModel as PydanticBase
@@ -62,4 +62,4 @@ class BaseFilter(BaseModel):
 
 class BaseList(BaseModel):
     total_result_count: int
-    results: list[Any]
+    results: List[Any]

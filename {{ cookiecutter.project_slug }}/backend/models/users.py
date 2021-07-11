@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import List, TYPE_CHECKING
 
 from sqlalchemy import Column, Text, UniqueConstraint
 from sqlalchemy.orm import relationship
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from .items import Item  # noqa: F401
 
 
-class User(Base):  # type: ignore
+class User(Base):
     full_name: str = Column(
         Text,
         nullable=False,
@@ -25,7 +25,7 @@ class User(Base):  # type: ignore
         nullable=False,
     )
 
-    items: list["Item"] = relationship(
+    items: List["Item"] = relationship(
         "Item",
         back_populates="owner",
     )

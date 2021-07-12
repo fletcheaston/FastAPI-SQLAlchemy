@@ -30,8 +30,6 @@ class Item(Base):  # type: ignore
         back_populates="items",
     )
 
-    # search_vector: Any
-
     __table_args__ = (
         Index("owner_id_index", owner_id),
         UniqueConstraint(name, owner_id),

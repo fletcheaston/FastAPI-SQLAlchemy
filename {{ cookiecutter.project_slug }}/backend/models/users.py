@@ -1,4 +1,4 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Column, Text, UniqueConstraint
 from sqlalchemy.orm import relationship
@@ -29,7 +29,5 @@ class User(Base):
         "Item",
         back_populates="owner",
     )
-
-    # search_vector: Any
 
     __table_args__ = (UniqueConstraint(email),)

@@ -2,7 +2,7 @@ import uuid
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, or_, select
 from sqlalchemy.exc import IntegrityError, NoResultFound
 
 from backend.models import Item
@@ -45,7 +45,12 @@ def list_items(
     query = select(Item)
 
     if filters.search:
-        query = query.filter(search_vector=filters.search)
+        query = query.filter(
+            or_(
+                Item.name.contains(filters.search),
+                Item.description.contains(filters.search),
+            ),
+        )
 
     total_count = server.db.execute(
         select(func.count()).select_from(query.subquery())
@@ -57,11 +62,11 @@ def list_items(
     results = server.db.execute(query)
     scalars = results.scalars()
 
-    users = scalars.all()
+    items = scalars.all()
 
     return {
         "total_result_count": total_count,
-        "results": users,
+        "results": items,
     }
 
 

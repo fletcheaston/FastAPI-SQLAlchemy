@@ -58,7 +58,7 @@ def list_users(
     query = select(User)
 
     if filters.search:
-        query = query.filter(User.name.contains(filters.search))
+        query = query.filter(User.full_name.contains(filters.search))
 
     total_count = server.db.execute(
         select(func.count()).select_from(query.subquery())
